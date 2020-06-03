@@ -22,7 +22,7 @@ export default function Home() {
   const audioElement = useRef(null);
   const [showOverlay, toggleOverlay] = useState(true);
   const [loadingMsg, setLoadingMsg] = useState(loadingArray[randomIndex]);
-  const [activeRadioIdx, setActiveRadioIdx] = useState(0);
+  const [activeRadioIdx, setActiveRadioIdx] = useState(randomRadioIndex);
   
   const opts = {
     height: '560',
@@ -35,13 +35,7 @@ export default function Home() {
       enablejsapi: 1,
       loop: 1
     },
-  };
-
-  // useEffect(() => {
-  //   if (!showOverlay) {
-  //     audioElement.current.play();
-  //   }
-  // }, [showOverlay]); 
+  }; 
 
   function onReady(e) { 
     e.target.playVideo();
@@ -71,7 +65,12 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Mudik dan Radio</title>
+        <meta name="description" content="Nyetir di tol Trans Jawa sambil dengar radio" />
+        <meta name="title" content="Mudik dan radio" />
+        <meta property="og:site_name" content="Mudik dan Radio"/>
+        <meta property="og:title" content="Mudik dan Radio"/>
+        <meta property="og:description" content="Nyetir di tol Trans Jawa sambil dengar radio"  />
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script src="https://www.youtube.com/iframe_api" />
