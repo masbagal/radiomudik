@@ -102,9 +102,6 @@ export default function Home() {
           padding: 0;
           background: #000;
         }
-        audio {
-          display: none;
-        }
         .center {
           text-align: center
         }
