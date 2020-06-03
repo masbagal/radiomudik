@@ -14,17 +14,23 @@ const loadingArray = [
   'Mencari kunci mobil...',
 ];
 
-const randomIndex = Math.floor(Math.random() * 5);
-const randomRadioIndex = Math.floor(Math.random() * 6);
-
 
 export default function Home() {
   const audioElement = useRef(null);
+  const [videoObj, setVideoObj] = useState(null);
   const [showOverlay, toggleOverlay] = useState(true);
   const [showStartButton, toggleStartButton] = useState(false);
-  const [loadingMsg, setLoadingMsg] = useState(loadingArray[randomIndex]);
-  const [activeRadioIdx, setActiveRadioIdx] = useState(randomRadioIndex);
+  const [loadingMsg, setLoadingMsg] = useState('');
+  const [activeRadioIdx, setActiveRadioIdx] = useState(0);
   
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * 5);
+    const randomRadioIndex = Math.floor(Math.random() * 6);
+    setLoadingMsg(loadingArray[randomIndex]);
+    setActiveRadioIdx(randomRadioIndex);
+    
+  }, [])
+
   const opts = {
     height: '560',
     width: '640',
@@ -39,12 +45,14 @@ export default function Home() {
   }; 
 
   function onReady(e) { 
+    setVideoObj(e);
     e.target.playVideo();
     setLoadingMsg('');
     toggleStartButton(true);
   }
 
   function handleBerangkat() {
+    videoObj && videoObj.target.playVideo();
     audioElement.current.play();
     toggleOverlay(false);
     toggleStartButton(false);
