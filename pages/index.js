@@ -1,204 +1,162 @@
-import Head from 'next/head'
+import React, { useEffect, useState, useRef } from 'react';
+import YouTube from 'react-youtube';
+import Head from 'next/head';
+
+import radioList from '../radios';
+import Back from '../components/back';
+import Next from '../components/next';
+
+const loadingArray = [
+  'Memanaskan mesin mobil...',
+  'Packing-packing baju...',
+  'Menyiapkan snack untuk perjalanan...',
+  'Mengecek air radiator...',
+  'Mencari kunci mobil...',
+];
+
+const randomIndex = Math.floor(Math.random() * 5);
+const randomRadioIndex = Math.floor(Math.random() * 6);
+
 
 export default function Home() {
+  const audioElement = useRef(null);
+  const [showOverlay, toggleOverlay] = useState(true);
+  const [loadingMsg, setLoadingMsg] = useState(loadingArray[randomIndex]);
+  const [activeRadioIdx, setActiveRadioIdx] = useState(0);
+  
+  const opts = {
+    height: '560',
+    width: '640',
+    playerVars: {
+      autoplay: 1,
+      modestbranding: 1,
+      controls: 0,
+      disablekb: 0,
+      enablejsapi: 1,
+      loop: 1
+    },
+  };
+
+  // useEffect(() => {
+  //   if (!showOverlay) {
+  //     audioElement.current.play();
+  //   }
+  // }, [showOverlay]); 
+
+  function onReady(e) { 
+    e.target.playVideo();
+  }
+  
+  function onPlay(){
+    setLoadingMsg('');
+    setTimeout(() => {
+      toggleOverlay(false);
+    }, 1000)
+  }
+
+  function handleNext() {
+    const appliedNextIndex = Math.min(5, activeRadioIdx + 1);
+    setActiveRadioIdx(appliedNextIndex);
+  }
+
+  function handlePrev() {
+    const appliedNextIndex = Math.max(0, activeRadioIdx - 1);
+    setActiveRadioIdx(appliedNextIndex);
+  }
+
+  const overlayClass = showOverlay ? 'show' : 'hide';
+  const hudClass = showOverlay ? 'hide' : 'show';
+  const activeRadio = radioList[activeRadioIdx];
+  
   return (
-    <div className="container">
+    <>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://www.youtube.com/iframe_api" />
       </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/zeit/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://zeit.co/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with ZEIT Now.
-            </p>
-          </a>
+      <div className='bg'>
+        <YouTube containerClassName='playerContainer' className='video' videoId="Nu2LwfIFuD4" opts={opts} onReady={onReady} onPlay={onPlay} />
+      </div>
+      <div className={`${overlayClass} overlay`}>
+          <h2>{loadingMsg}</h2>
+      </div>
+      <audio ref={audioElement} src={activeRadio.source} preload="auto" autoPlay />
+      <div className='HUD'>
+        <div className={`HUDcontainer ${hudClass}`}>
+          <div className='center videoTitle'>Tangerang Selatan - Madiun via Tol Trans Jawa</div>
+          <div className='center controller'>
+            <div onClick={handlePrev}><Back/></div>
+            <div>{activeRadio.name}</div>
+            <div onClick={handleNext}><Next /></div>
+          </div>
+          <a className='center source a' href='https://www.youtube.com/watch?v=Nu2LwfIFuD4' rel='noopener noreferrer'>Sumber Video</a>
         </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
+      </div>
       <style jsx global>{`
-        html,
-        body {
-          padding: 0;
+        html, body {
+          width: 100%;
+          height: 100%;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
+          padding: 0;
+          background: #000;
         }
-
-        * {
-          box-sizing: border-box;
+        audio {
+          display: none;
+        }
+        .center {
+          text-align: center
+        }
+        .overlay {
+          width: 100%;
+          height: 100vh;
+          top: 0;
+          left: 0;
+          background: #000000aa;
+          position: fixed;
+          transition: opacity ease .5s;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .show {
+          z-index: 100;
+          opacity: 1;
+        }
+        .hide {
+          zIndex: -1;
+          opacity: 0;
+        }
+        .bg {
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          z-index: 0;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .video {
+          top: 0;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          position: relative;
+          min-width: 100%;
+          transform: scale(2.1);
+        }
+        .playerContainer {
+          width: 100%;
+          bottom: 0;
+          right: 0;
+          left: 0;
         }
       `}</style>
-    </div>
+    </>
   )
 }
