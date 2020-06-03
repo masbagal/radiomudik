@@ -82,7 +82,7 @@ export default function Home() {
       <div className={`${overlayClass} overlay`}>
           <h2>{loadingMsg}</h2>
       </div>
-      <audio ref={audioElement} src={activeRadio.source} preload="auto" autoPlay />
+      <audio ref={audioElement} src={activeRadio.source} preload="auto" autoPlay type={activeRadio.type} />
       <div className='HUD'>
         <div className={`HUDcontainer ${hudClass}`}>
           <div className='center videoTitle'>Tangerang Selatan - Madiun via Tol Trans Jawa</div>
