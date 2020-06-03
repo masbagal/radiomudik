@@ -124,9 +124,9 @@ export default function Home() {
           height: 100vh;
           top: 0;
           left: 0;
-          background: #000000aa;
+          background: #000000fe;
           position: fixed;
-          transition: opacity ease .5s;
+          transition: opacity ease 3s;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -159,7 +159,7 @@ export default function Home() {
           left: 0;
           position: relative;
           min-width: 100%;
-          transform: scale(2.4);
+          transform: scale(3);
         }
         .dim {
           opacity: 0.3

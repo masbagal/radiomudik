@@ -5,12 +5,13 @@
   position: absolute;
   bottom: 0;
   font-size: 0.8rem;
-  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
   padding-right: 1rem;
   padding-left: 1rem;
   box-sizing: border-box; 
   transition: opacity ease 0.3s;
   user-select: none;
+  background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0) 16%, #232a31 100%)
 }
 .videoTitle { width: 20%; display: inline-block }
 .source { width: 20%; display: inline-block }
@@ -28,9 +29,9 @@
   align-items: center;
 }
 @media (max-width: 640px) {
-  .HUDcontainer {
-    flex-direction: column;
-  }
+  .HUDcontainer { flex-direction: column }
+  .HUD {  }
+  .video { transform: scale(2.4)!important }
   .videoTitle { width: 60%; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: bold }
   .controller { width: 100%; margin-bottom: 0.5rem; text-align:center }
   .source { width: 100%; display: inline-block; text-align:center; font-size: 0.5rem; }
