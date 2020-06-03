@@ -21,6 +21,7 @@ const randomRadioIndex = Math.floor(Math.random() * 6);
 export default function Home() {
   const audioElement = useRef(null);
   const [showOverlay, toggleOverlay] = useState(true);
+  const [showStartButton, toggleStartButton] = useState(false);
   const [loadingMsg, setLoadingMsg] = useState(loadingArray[randomIndex]);
   const [activeRadioIdx, setActiveRadioIdx] = useState(randomRadioIndex);
   
@@ -39,13 +40,18 @@ export default function Home() {
 
   function onReady(e) { 
     e.target.playVideo();
+    setLoadingMsg('');
+    toggleStartButton(true);
+  }
+
+  function handleBerangkat() {
+    audioElement.current.play();
+    toggleOverlay(false);
+    toggleStartButton(false);
   }
   
-  function onPlay(){
-    setLoadingMsg('');
-    setTimeout(() => {
-      toggleOverlay(false);
-    }, 1000)
+  function handleVideoStateChange(e) {
+    e.target.data < 0 && e.target.playVideo();
   }
 
   function handleNext() {
@@ -76,12 +82,13 @@ export default function Home() {
         <script src="https://www.youtube.com/iframe_api" />
       </Head>
       <div className='bg'>
-        <YouTube containerClassName='playerContainer' className='video' videoId="Nu2LwfIFuD4" opts={opts} onReady={onReady} onPlay={onPlay} />
+        <YouTube containerClassName='playerContainer' className='video' videoId="Nu2LwfIFuD4" opts={opts} onReady={onReady} onStateChange={handleVideoStateChange} />
       </div>
       <div className={`${overlayClass} overlay`}>
           <h2>{loadingMsg}</h2>
+          <button style={{ display: showStartButton ? 'block' : 'none' }}onClick={handleBerangkat}>Berangkat</button>
       </div>
-      <audio ref={audioElement} src={activeRadio.source} preload="auto" autoPlay type={activeRadio.type} />
+      <audio ref={audioElement} src={activeRadio.source} preload="auto" />
       <div className='HUD'>
         <div className={`HUDcontainer ${hudClass}`}>
           <div className='center videoTitle'>Tangerang Selatan - Madiun via Tol Trans Jawa</div>
@@ -145,12 +152,6 @@ export default function Home() {
           position: relative;
           min-width: 100%;
           transform: scale(2.4);
-        }
-        .playerContainer {
-          width: 100%;
-          bottom: 0;
-          right: 0;
-          left: 0;
         }
         .dim {
           opacity: 0.3
