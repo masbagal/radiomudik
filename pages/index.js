@@ -61,11 +61,6 @@ export default function Home() {
   const overlayClass = showOverlay ? 'show' : 'hide';
   const hudClass = showOverlay ? 'hide' : 'show';
   const activeRadio = radioList[activeRadioIdx];
-  const isFirstItem = activeRadioIdx === 0;
-  const isLastItem = activeRadioIdx === radioList.length - 1;
-
-  const backClass = isFirstItem ? 'dim' : '';
-  const nextClass = isLastItem ? 'dim' : '';
   
   return (
     <>
@@ -91,9 +86,9 @@ export default function Home() {
         <div className={`HUDcontainer ${hudClass}`}>
           <div className='center videoTitle'>Tangerang Selatan - Madiun via Tol Trans Jawa</div>
           <div className='center controller'>
-            <div className={backClass} onClick={handlePrev}><Back/></div>
+            <div onClick={handlePrev}><Back/></div>
             <div>{activeRadio.name}</div>
-            <div className={nextClass} onClick={handleNext}><Next /></div>
+            <div onClick={handleNext}><Next /></div>
           </div>
           <a className='center source a' href='https://www.youtube.com/watch?v=Nu2LwfIFuD4' rel='noopener noreferrer'>Sumber Video</a>
         </div>
