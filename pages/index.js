@@ -148,7 +148,7 @@ export default function Home() {
           left: 0;
           position: relative;
           min-width: 100%;
-          transform: scale(2.1);
+          transform: scale(2.4);
         }
         .playerContainer {
           width: 100%;
