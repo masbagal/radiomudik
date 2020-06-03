@@ -10,6 +10,7 @@
   padding-left: 1rem;
   box-sizing: border-box; 
   transition: opacity ease 0.3s;
+  user-select: none;
 }
 .videoTitle { width: 20%; display: inline-block }
 .source { width: 20%; display: inline-block }

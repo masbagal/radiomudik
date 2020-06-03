@@ -12,15 +12,15 @@ export default [
     source: 'https://stream.radiojar.com/4ywdgup3bnzuv',
   },
   {
-    name: 'Andika Kediri 105.7 FM',
-    source: 'https://stream2.andikafm.com:1057/andikafm;',
+    name: 'Hard Rock FM Jakarta',
+    source: 'https://stream.radiojar.com/7csmg90fuqruv',
   },
   {
     name: 'Prambors FM Jakarta',
     source: 'https://masima.rastream.com/masima-pramborsjakarta?',
   },
   {
-    name: 'Jugar FM (24/7 Dangdut)',
-    source: 'https://c2.siar.us/proxy/jugar?mp=/jugarfm',
+    name: 'Trax FM',
+    source: 'https://stream.radiojar.com/7csmg90fuqruv',
   },
 ]
