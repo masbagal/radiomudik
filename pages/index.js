@@ -44,6 +44,10 @@ export default function Home() {
     },
   }; 
 
+  useEffect(() => {
+    audioElement.current.play();
+  }, [activeRadioIdx])
+
   function onReady(e) { 
     setVideoObj(e);
     e.target.playVideo();
@@ -65,13 +69,11 @@ export default function Home() {
   function handleNext() {
     const appliedNextIndex = Math.min(5, activeRadioIdx + 1);
     setActiveRadioIdx(appliedNextIndex);
-    audioElement.current.play();
   }
 
   function handlePrev() {
     const appliedNextIndex = Math.max(0, activeRadioIdx - 1);
     setActiveRadioIdx(appliedNextIndex);
-    audioElement.current.play();
   }
 
   const overlayClass = showOverlay ? 'show' : 'hide';
